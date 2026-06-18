@@ -1,65 +1,95 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useState } from "react";
+import ToogleTheme from "./components/toggletheme";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./components/ui/dropdown-menu";
+import { Button } from "./components/ui/button";
 
 export default function Home() {
+
+  const [datetime, setdate] = useState(new Date());
+
+  const [sizeval, setSize] = useState(10);
+  const [currentchecked, setchecked] = useState(false);
+
+
+  useEffect(() => {
+
+    const interval = setInterval(() => {
+      setdate(new Date());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const formattedtime = Intl.DateTimeFormat("en-IN", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  }).format(datetime);
+
+  const [sizeint, setClockSize] = useState<number>(100);
+
+  const sizeClasses: Record<number, string> = {
+    5: "text-[5px]",
+    10: "text-[10px]",
+    20: "text-[20px]",
+    40: "text-[40px]",
+    60: "text-[60px]",
+    100: "text-[100px]",
+    110: "text-[110px]",
+    120: "text-[120px]",
+    140: "text-[140px]",
+    160: "text-[160px]",
+    200: "text-[200px]",
+    210: "text-[210px]"
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="bg-background text-foreground dark:bg-black dark:text-white bg-white text-black">
+      <div className="flex flex-row flex-1 items-center justify-between ">
+        <div className="flex flex-row flex-1 items-center justify-between ">
+          <h1 className="text-2xl m-5 font-bold" suppressHydrationWarning>Time Now</h1>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="default">size :{sizeint}</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-background text-foreground dark:bg-gray-500/20 dark:text-white bg-white text-black rounded-sm border-solid">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>size</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem checked={sizeint === 5} onCheckedChange={() => setClockSize(5)}>5px</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={sizeint === 10} onCheckedChange={() => setClockSize(10)}>10px</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={sizeint === 20} onCheckedChange={() => setClockSize(20)}>20px</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={sizeint === 40} onCheckedChange={() => setClockSize(40)}>40px</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={sizeint === 60} onCheckedChange={() => setClockSize(60)}>60px</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={sizeint === 100} onCheckedChange={() => setClockSize(100)}>100px</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={sizeint === 110} onCheckedChange={() => setClockSize(110)}>110px</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={sizeint === 120} onCheckedChange={() => setClockSize(120)}>120px</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={sizeint === 140} onCheckedChange={() => setClockSize(140)}>140px</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={sizeint === 160} onCheckedChange={() => setClockSize(160)}>160px</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={sizeint === 200} onCheckedChange={() => setClockSize(200)}>200px</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={sizeint === 210} onCheckedChange={() => setClockSize(210)}>210px</DropdownMenuCheckboxItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="mr-4 ml-2">
+          <ToogleTheme></ToogleTheme>
         </div>
-      </main>
+      </div>
+
+      <div className="flex flex-col flex-1 items-center justify-center ">
+
+        <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16">
+
+          <div className="">
+            <h1 className={sizeClasses[sizeint]}>{formattedtime}</h1>
+          </div>
+
+        </main>
+
+      </div>
     </div>
   );
 }
