@@ -25,7 +25,7 @@ export default function ToggleTheme() {
           setTheme(theme === "dark" ? "light" : "dark")
         }
       >
-        {theme === "dark" ? <Sun className="" /> : <Moon className=""/>}
+        {theme === "dark" ? <Sun className="" /> : <Moon className="" />}
       </Button>
     </div>
 
