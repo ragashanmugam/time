@@ -32,7 +32,8 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-white text-black dark:bg-black dark:text-white">
 
-        <Providers >{children}</Providers>
+        <>Hello</>
+        {/* <Providers ></Providers> */}
 
       </body>
     </html>
